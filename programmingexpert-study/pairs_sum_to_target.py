@@ -1,17 +1,15 @@
-list1 = [1, -2, 4, 5, 9]
-
-list2 = [4, 2, -4, -4, 0]
-
-target = 5
-
 def pairs_sum_to_target(list1, list2, target):
-    # Write your code here.
-
-
-
-
-
     
-    return list1 + list2
+    pairs_list = []
 
-print(pairs_sum_to_target(list1, list2, target))
+    for i in range(len(list1)):
+
+        for j in range(len(list2)):  # go through each index combination
+
+            if (list1[i] + list2[j]) == target:  
+
+                pairs_list.append([i, j])   # add index pair whose summation equals target to new list
+    
+    return pairs_list
+
+
