@@ -1,27 +1,19 @@
-frequencies = {"h": 2, "e": 1, "l": 2, "r": 4, "a": 3, "o": 2, "d": 1, "w": 1}
-
-string1 = "hello"
-
-string2 = "world"
-
 def create_strings_from_characters(frequencies, string1, string2):
 
-    frequencies_contains_string1 = False  #set default values
-    frequencies_contains_string2 = False
-    frequencies_contains_string1_and_string2 = False
-
-    string1_dict = string_to_dict(string1)  #create dictionaries for comparing frequencies
+    frequencies_copy = frequencies.copy()  # create copy of frequencies so we do not modify it
+    string1_dict = string_to_dict(string1)  # create dictionaries for comparing frequencies
     string2_dict = string_to_dict(string2)
     string1_and_string2_dict = string_to_dict(string1 + string2) 
 
-    frequencies_contains_string1 = compare_char_frequencies(frequencies, string1_dict)  #compare the frequencies
-    frequencies_contains_string2 = compare_char_frequencies(frequencies, string2_dict)
-    frequencies_contains_string1_and_string2 = compare_char_frequencies(frequencies, string1_and_string2_dict)
+    frequencies_contains_string1 = dict1_contains_dict2(frequencies_copy, string1_dict)  # assign bool values based on a comparison of the frequencies
+    frequencies_contains_string2 = dict1_contains_dict2(frequencies_copy, string2_dict)
+    frequencies_contains_string1_and_string2 = dict1_contains_dict2(frequencies_copy, string1_and_string2_dict)
+    
 
     if frequencies_contains_string1_and_string2:  # return a value based on the relationship between the strings and the original provided dictionary
         return 2
     
-    elif frequencies_contains_string1 or frequencies_contains_string2:
+    if frequencies_contains_string1 or frequencies_contains_string2:
         return 1
     
     else:
@@ -33,9 +25,8 @@ def string_to_dict(string):  # takes in a string and returns a dict with {'char'
         string_dict[i] = string_dict.get(i, 0) + 1
     return string_dict
 
-def compare_char_frequencies(dict1, dict2):  #  returns True if the char frequencies in dict1 >= frequencies in dict2
-    pass
-
-print(create_strings_from_characters(frequencies, string1, string2))
-#print(string_to_dict(string1))
-#print(string_to_dict(string2))
+def dict1_contains_dict2(dict1, dict2):  #  returns False if the char frequencies in dict1 < frequencies in dict2
+    for key in dict2:
+        if dict1.get(key, 0) < dict2[key]:
+            return False
+    return True
