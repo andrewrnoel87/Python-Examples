@@ -4,8 +4,6 @@ string1 = "hello"
 
 string2 = "world"
 
-# the_plan
-# build dictionary out of strings and compare to provided frequencies
 def create_strings_from_characters(frequencies, string1, string2):
 
     frequencies_contains_string1 = False  #set default values
@@ -36,7 +34,7 @@ def string_to_dict(string):  # takes in a string and returns a dict with {'char'
     return string_dict
 
 def compare_char_frequencies(dict1, dict2):  #  returns True if the char frequencies in dict1 >= frequencies in dict2
-
+    pass
 
 print(create_strings_from_characters(frequencies, string1, string2))
 #print(string_to_dict(string1))
