@@ -26,7 +26,7 @@ class AnotherGame(AbstractGame):
 
 class RandomGuesser(AbstractGame):
 
-    def __init__(self, rounds):
+    def __init__(self, rounds: int):
         self.rounds = rounds
         self.round = 0
 
