@@ -8,64 +8,70 @@ class Inventory:
         if (self.total_quantity + quantity <= self.max_capacity) and (name not in self.inventory):
             self.inventory[name] = [price, quantity]
             self.total_quantity += quantity
-            return True  # add to the inventory dictionary
+            return True 
         return False
 
 
     def delete_item(self, name: str):
-        if name in self.inventory:
-            if self.inventory.pop(name, False) != False:
+        if name not in self.inventory:
+            return False
+        for key in self.inventory:
+            if name == key:
+                self.total_quantity -= self.inventory.get(key)[1]
+                del self.inventory[name]
                 return True
-        return False
+        
+
 
     def get_items_in_price_range(self, min_price: float, max_price: float):
         # Write your code here.
         pass
 
     def get_most_stocked_item(self):
-        largest_qty = None
-        largest_keys = [] 
+        largest_qty = 0
+        largest_key = None 
 
         if len(self.inventory) == 0:
            return None
+        else:
+            first_key = self.inventory.popitem()
+
+            largest_qty = first_key[1][1]
+            largest_key = first_key[0]
+         
+            self.inventory[first_key[0]] = [first_key[1][0], first_key[1][1]]
        
         for key in self.inventory:
-            if len(largest_keys) == 0:
-                largest_qty = self.inventory.get(key)[1]
-                largest_keys.append(key)
-         
-            current_key_qty = self.inventory.get(key)[1]
-            
-            if current_key_qty == largest_qty:
-                largest_keys.append(key)
-            elif current_key_qty > largest_qty:
-                largest_keys = [key]
+            if key not in largest_key:
 
-        return str(largest_keys)       
-        #if len(largest_keys) == 1:
-            #return largest_keys[0]
-
-        #else:
-            #eturn tuple(largest_keys)
+                current_key_qty = self.inventory.get(key)[1]
+                    
+                if current_key_qty > largest_qty:
+                    
+                    largest_qty = current_key_qty
+                    largest_keys = key
+                    
+        return largest_key
           
            
-inventory = Inventory(4)
-print(inventory.add_item('Chocolate', 4.99, 4))
-print(inventory.delete_item('Chocolate'))
-print(inventory.delete_item('Chocolate'))
-print(inventory.delete_item('Chocolate'))
-print(inventory.add_item('Chocolate', 4.99, 4))
-print(inventory.delete_item('Chocolate'))
+#inventory = Inventory(4)
+#print(inventory.add_item('Chocolate', 4.99, 4))
+#print(inventory.delete_item('Chocolate'))
+#print(inventory.delete_item('Chocolate'))
+#print(inventory.delete_item('Chocolate'))
+#print(inventory.add_item('Chocolate', 4.99, 4))
+#print(inventory.delete_item('Chocolate'))
 
-#inventory = Inventory(9)
+inventory = Inventory(9)
 
-#print(inventory.add_item('Chocolate', 4.99, 1))
-#print(inventory.add_item('Vanilla', 6.99, 2))
-#inv = inventory.inventory
-#print(inv)
+print(inventory.add_item('Chocolate', 4.99, 6))
+print(inventory.add_item('Vanilla', 6.99, 2))
+inv = inventory.inventory
+print(inv)
 
-#print(inventory.get_most_stocked_item())
-#inventory.delete_item('Chocolate')
-#print(inventory.get_most_stocked_item())
-#inventory.delete_item('Vanilla')
-#print(inventory.get_most_stocked_item())
+print(inventory.delete_item('Chocolate'))
+print(inventory.get_most_stocked_item())
+print(inventory.delete_item('Chocolate'))
+print(inventory.get_most_stocked_item())
+print(inventory.delete_item('Vanilla'))
+print(inventory.get_most_stocked_item())
