@@ -5,54 +5,45 @@ class Inventory:
         self.items = {}
 
     def add_item(self, name: str, price: float, quantity: int):
-        if (self.item_count + quantity <= self.max_capacity) and (name not in self.inventory):
-            self.inventory[name] = {'name': name, 'price': price, 'quantity': quantity}
-            self.total_quantity += quantity
+        if (self.item_count + quantity <= self.max_capacity) and (name not in self.items):
+            self.items[name] = {'name': name, 'price': price, 'quantity': quantity}
+            self.item_count += quantity
             return True 
+        
         return False
 
 
     def delete_item(self, name: str):
-        if name not in self.inventory:
+        if name not in self.items:
             return False
-        for key in self.inventory:
-            if name == key:
-                self.total_quantity -= self.inventory.get(key)[1]
-                del self.inventory[name]
-                return True
+      
+        self.item_count -= self.items[name]['quantity']
+        del self.items[name]
+        return True
         
 
 
     def get_items_in_price_range(self, min_price: float, max_price: float):
-        # Write your code here.
-        pass
+        items_in_price_range = []
+
+        for name in self.items:
+            if min_price <= self.items[name]['price'] <= max_price:
+                items_in_price_range.append(name)
+
+        return items_in_price_range
 
     def get_most_stocked_item(self):
-        largest_qty = 0
-        largest_key = None 
-
-        if len(self.inventory) == 0:
-           return None
-        else:
-            first_key = self.inventory.popitem()
-
-            largest_qty = first_key[1][1]
-            largest_key = first_key[0]
-         
-            self.inventory[first_key[0]] = [first_key[1][0], first_key[1][1]]
+        
+        most_stocked_item = None 
+        most_stocked_item_qty = 0
        
-        for key in self.inventory:
-            if key not in largest_key:
+        for name in self.items:
 
-                current_key_qty = self.inventory.get(key)[1]
-                    
-                if current_key_qty > largest_qty:
-                    
-                    largest_qty = current_key_qty
-                    largest_keys = key
-                    
-        return largest_key
+            if self.items[name]['quantity'] > most_stocked_item_qty:
+                most_stocked_item = name
+                most_stocked_item_qty = self.items[name]['quantity']
 
+        return most_stocked_item
           
            
 #inventory = Inventory(4)
@@ -67,13 +58,15 @@ inventory = Inventory(9)
 
 print(inventory.add_item('Chocolate', 4.99, 6))
 print(inventory.add_item('Vanilla', 6.99, 2))
-inv = inventory.inventory
-print(inv)
-
-#print(inventory.delete_item('Chocolate'))
+print(inventory.items)
 print(inventory.get_most_stocked_item())
-print(inventory.inventory)
+print(inventory.items)
 print(inventory.delete_item('Chocolate'))
+print(inventory.items)
 print(inventory.get_most_stocked_item())
 print(inventory.delete_item('Vanilla'))
+print(inventory.items)
+print(inventory.get_most_stocked_item())
+print(inventory.add_item('Chocolate', 4.99, 9))
+print(inventory.items)
 print(inventory.get_most_stocked_item())
