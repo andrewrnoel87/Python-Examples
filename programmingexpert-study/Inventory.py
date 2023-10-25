@@ -1,12 +1,12 @@
 class Inventory:
     def __init__(self, max_capacity: int):
         self.max_capacity = max_capacity
-        self.total_quantity = 0
-        self.inventory = {}
+        self.item_count = 0
+        self.items = {}
 
     def add_item(self, name: str, price: float, quantity: int):
-        if (self.total_quantity + quantity <= self.max_capacity) and (name not in self.inventory):
-            self.inventory[name] = [price, quantity]
+        if (self.item_count + quantity <= self.max_capacity) and (name not in self.inventory):
+            self.inventory[name] = {'name': name, 'price': price, 'quantity': quantity}
             self.total_quantity += quantity
             return True 
         return False
@@ -52,6 +52,7 @@ class Inventory:
                     largest_keys = key
                     
         return largest_key
+
           
            
 #inventory = Inventory(4)
@@ -69,8 +70,9 @@ print(inventory.add_item('Vanilla', 6.99, 2))
 inv = inventory.inventory
 print(inv)
 
-print(inventory.delete_item('Chocolate'))
+#print(inventory.delete_item('Chocolate'))
 print(inventory.get_most_stocked_item())
+print(inventory.inventory)
 print(inventory.delete_item('Chocolate'))
 print(inventory.get_most_stocked_item())
 print(inventory.delete_item('Vanilla'))
