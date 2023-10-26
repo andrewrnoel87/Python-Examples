@@ -6,15 +6,15 @@ class Student:
         self._grade = grade
         Student.all_students.append(self)
 
-        @property
-        def grade(self):
-            return self._grade
+    @property
+    def grade(self):
+        return self._grade
 
-        @grade.setter
-        def grade(self, new_grade):
-            if new_grade < 0 or new_grade > 100:
-                raise ValueError("New grade not in the accepted range of [0-100].")
-            self._grade = new_grade
+    @grade.setter
+    def grade(self, new_grade):
+        if new_grade < 0 or new_grade > 100:
+            raise ValueError("New grade not in the accepted range of [0-100].")
+        self._grade = new_grade
 
     @classmethod
     def get_best_student(cls):
