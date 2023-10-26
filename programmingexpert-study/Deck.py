@@ -31,7 +31,18 @@ class Deck:
         return cards_dealt
     
     def sort_by_suit(self):
-        return self.deck.sort()
+        cards_by_suit = {"H": [], "D": [], "C": [], "S": []}
+
+        for card in self.deck:
+            suit = card[-1]
+            cards_by_suit[suit].append(card)
+
+        self.deck = (
+            cards_by_suit["H"] +
+            cards_by_suit["D"] +
+            cards_by_suit["C"] +
+            cards_by_suit["S"]
+        )
 
     def contains(self, card):
         if card in self.deck:
