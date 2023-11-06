@@ -3,18 +3,16 @@ class FileSystem:
         self.root = Directory("/")
 
     def create_directory(self, path):
-        FileSystem._validate_path(path)
 
-        before_last_node, new_directory_name = FileSystem.parse_node_path(path)
+        before_last_node, new_directory_name = FileSystem.parse_node_path(self, path)
         
         new_directory = Directory(new_directory_name)  # create a new directory
 
         before_last_node.add_node(new_directory)  # add new directory as a child of the before_last_node
 
     def create_file(self, path, contents):
-        FileSystem._validate_path(path)
 
-        before_last_node, new_file_name = FileSystem.parse_node_path(path)
+        before_last_node, new_file_name = FileSystem.parse_node_path(self, path)
         
         new_file = File(new_file_name)  # Create a new file
         new_file.write_contents(contents)  # Write the contents to the file
@@ -22,26 +20,18 @@ class FileSystem:
         before_last_node.add_node(new_file)  # Add the file node to the direct parent directory node
 
     def read_file(self, path):
-        FileSystem._validate_path(path)
 
-        before_last_node, file_name = FileSystem.parse_node_path(path)
+        before_last_node, file_name = FileSystem.parse_node_path(self, path)
 
-        if not isinstance(before_last_node, Directory):  # make sure before_last_node is a Directory
-            raise ValueError(f"{before_last_node.name} isn't a directory.")
-        
         if file_name not in before_last_node.children:  # make sure file_name is a child of before_last_node
             raise ValueError(f"File not found: {file_name}.")
 
         return before_last_node.children[file_name].contents
 
     def delete_directory_or_file(self, path):
-        FileSystem._validate_path(path)
 
-        before_last_node, node_to_delete_name = FileSystem.parse_node_path(path)
+        before_last_node, node_to_delete_name = FileSystem.parse_node_path(self, path)
 
-        if not isinstance(before_last_node, Directory):  # make sure before_last_node is a Directory
-            raise ValueError(f"{before_last_node.name} isn't a directory.")
-        
         if node_to_delete_name not in before_last_node.children:  # make sure node_to_delete_name is a child of before_last_node
             raise ValueError(f"File not found: {node_to_delete_name}.")
         
@@ -69,6 +59,7 @@ class FileSystem:
             raise ValueError("Path should start with `/`.")
         
     def parse_node_path(self, path):  # returns the node before the node we are adding and the name of the new node
+        FileSystem._validate_path(path)
 
         path_node_names = path[1:].split("/")  # Take the path string, skip the first element which should be a /, and split the string by /'s, return the list
         middle_node_names = path_node_names[:-1]  # The node names except the last one
@@ -78,6 +69,7 @@ class FileSystem:
 
         if not isinstance(before_last_node, Directory):  # make sure before_last_node is a Directory
             raise ValueError(f"{before_last_node.name} isn't a directory.")
+        
         return before_last_node, new_node_name
 
 
