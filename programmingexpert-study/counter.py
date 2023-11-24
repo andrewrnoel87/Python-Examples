@@ -5,6 +5,7 @@ def counter(start):
         count += value
         return count
     return increment
+
 count = counter(2)
 print(count(1))
 
