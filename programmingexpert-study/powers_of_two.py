@@ -20,7 +20,7 @@ def is_power_of_two(x):
 def find_powers_of_two(iter):
     for item in iter:
         if is_power_of_two(item):
-            set_lock.acquire()
+            set_lock.acquire()  #  protect our set data structure with locks
             powers_of_two.add(item)
             set_lock.release()
 
