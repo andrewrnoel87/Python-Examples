@@ -16,7 +16,7 @@ class GenerateString:
 
     def __next__(self):
         self.current += 1
-        if self.current - 1 < len(self.string):
+        if self.current - 1 < len(self.string):  #  -1 is used to correct the index
             return self.string[self.current - 1] * self.frequency
         else:
             raise StopIteration
