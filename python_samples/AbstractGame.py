@@ -1,3 +1,7 @@
+'''
+This code demonstrates Abstract Classes and Inheritance.
+'''
+
 import random
 
 class AbstractGame:
@@ -6,8 +10,8 @@ class AbstractGame:
         while True:
             start = input("Would you like to play? ")
             if start.lower() == "yes" or start.lower() == "y":
-                break
-        self.play()    
+                break 
+        self.play() 
             
 
     def end(self):
